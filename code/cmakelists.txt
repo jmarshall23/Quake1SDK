@@ -1,0 +1,97 @@
+cmake_minimum_required(VERSION 3.10)
+project(Quake)
+
+set(SOURCES
+    "chase.cpp"
+    "cd_win.cpp"
+    "cl_demo.cpp"
+    "cl_input.cpp"
+    "cl_main.cpp"
+    "cl_parse.cpp"
+    "cl_tent.cpp"
+    "cmd.cpp"
+    "common.cpp"
+    "conproc.cpp"
+    "console.cpp"
+    "crc.cpp"
+    "cvar.cpp"
+    "gl_draw.cpp"
+    "gl_mesh.cpp"
+    "gl_model.cpp"
+    "gl_refrag.cpp"
+    "gl_rlight.cpp"
+    "gl_rmain.cpp"
+    "gl_rmisc.cpp"
+    "gl_rsurf.cpp"
+    "gl_screen.cpp"
+    "gl_test.cpp"
+    "gl_vidnt.cpp"
+    "gl_warp.cpp"
+    "host.cpp"
+    "host_cmd.cpp"
+    "in_win.cpp"
+    "keys.cpp"
+    "mathlib.cpp"
+    "menu.cpp"
+    "net_dgrm.cpp"
+    "net_loop.cpp"
+    "net_main.cpp"
+    "net_vcr.cpp"
+    "net_win.cpp"
+    "net_wins.cpp"
+    "pr_cmds.cpp"
+    "pr_edict.cpp"
+    "pr_exec.cpp"
+    "sbar.cpp"
+    "r_part.cpp"
+    "snd_dma.cpp"
+    "snd_mem.cpp"
+    "snd_mix.cpp"
+    "snd_win.cpp"
+    "sv_main.cpp"
+    "sv_move.cpp"
+    "sv_phys.cpp"
+    "sv_user.cpp"
+    "sys_win.cpp"
+    "view.cpp"
+    "wad.cpp"
+    winquake.rc
+    "world.cpp"
+    "zone.cpp"
+)
+
+# Add executable target
+add_executable(Quake  WIN32 ${SOURCES})
+
+# Add GLQUAKE preprocessor definition
+target_compile_definitions(Quake PRIVATE GLQUAKE)
+
+# Link against the OpenGL library
+target_link_libraries(Quake PRIVATE opengl32 )
+
+# Link against Winsock library
+target_link_libraries(Quake PRIVATE Ws2_32)
+
+# Link against Windows Multimedia library
+target_link_libraries(Quake PRIVATE Winmm)
+
+# Link against Common Controls library
+target_link_libraries(Quake PRIVATE Comctl32)
+
+# Link against DirectInput library
+target_link_libraries(Quake PRIVATE dinput8)
+target_link_libraries(Quake PRIVATE dxguid)
+
+# Set the output directory for all build types (Debug, Release, etc.)
+set_target_properties(Quake PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/../
+)
+
+# Conditionally add a suffix to the output name for Debug builds
+set_target_properties(Quake PROPERTIES
+    DEBUG_OUTPUT_NAME "Quake"
+)
+
+if(MSVC)
+    target_compile_options(Quake PRIVATE /wd4305 /wd4996)
+endif()
