@@ -1019,7 +1019,7 @@ void COM_CheckRegistered (void)
 	int                     i;
 
 	COM_OpenFile("gfx/pop.lmp", &h);
-	static_registered = 0;
+	static_registered = 1; // jmarshall: load loose files in demo mode. 
 
 	if (h == -1)
 	{
